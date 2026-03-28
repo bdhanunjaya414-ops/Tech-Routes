@@ -7,17 +7,13 @@ const nodemailer = require('nodemailer');
 const User = require('../models/User');
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: 'smtp-relay.brevo.com',
   port: 587,
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  },
-  connectionTimeout: 10000
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS
+  }
 });
 
 router.post('/signup', async (req, res) => {
@@ -51,7 +47,7 @@ router.post('/signup', async (req, res) => {
     await user.save();
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.BREVO_USER,
       to: email,
       subject: 'Welcome to Tech Routes - Verify Your Account',
       html: `
@@ -64,7 +60,6 @@ router.post('/signup', async (req, res) => {
 
             <div style="padding:30px;">
               <h2>Hello ${name},</h2>
-              <p>Thank you for creating your Tech Routes account.</p>
               <p>Your OTP for verification is:</p>
 
               <div style="background:#2563eb; color:white; font-size:28px; font-weight:bold; text-align:center; padding:15px; border-radius:10px;">
@@ -106,10 +101,6 @@ router.post('/verify', async (req, res) => {
       });
     }
 
-    console.log('Verify email:', email);
-    console.log('Entered OTP:', otp);
-    console.log('Saved OTP:', user.otp);
-
     if (user.otp.toString().trim() !== otp.toString().trim()) {
       return res.json({
         message: 'Invalid OTP'
@@ -129,39 +120,11 @@ router.post('/verify', async (req, res) => {
     await user.save();
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.BREVO_USER,
       to: email,
       subject: 'Welcome to Tech Routes - Account Verified',
       html: `
-        <div style="font-family:Arial; background:#f4f4f4; padding:30px;">
-          <div style="max-width:650px; margin:auto; background:white; border-radius:12px; overflow:hidden;">
-            <div style="background:#16a34a; color:white; text-align:center; padding:25px;">
-              <h1>Welcome to Tech Routes 🎉</h1>
-            </div>
-
-            <div style="padding:30px;">
-              <h2>Hello ${user.name},</h2>
-
-              <p>Your account has been successfully verified.</p>
-
-              <p>Now you can explore our courses:</p>
-
-              <ul>
-                <li>Java Full Stack Development</li>
-                <li>Python Programming</li>
-                <li>Frontend Development</li>
-                <li>Backend APIs</li>
-                <li>AI & LLM Learning</li>
-              </ul>
-
-              <p>
-                Tech Routes helps students and job seekers build practical technical skills and career confidence.
-              </p>
-
-              <p>Best regards,<br><strong>Tech Routes Team</strong></p>
-            </div>
-          </div>
-        </div>
+        <h2>Your account verified successfully 🎉</h2>
       `
     });
 
