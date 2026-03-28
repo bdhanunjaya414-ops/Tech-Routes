@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --bg-primary: #ffffff;
+  --text-primary: #111827;
+  --accent-primary: #3b82f6;
+  --card-bg: #f9fafb;
+  --border-color: #e5e7eb;
+}
+
+[data-theme='dark'] {
+  --bg-primary: #0f172a;
+  --text-primary: #f8fafc;
+  --accent-primary: #60a5fa;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+}
+
+[data-theme='ocean'] {
+  --bg-primary: #0c4a6e;
+  --text-primary: #f0f9ff;
+  --accent-primary: #38bdf8;
+  --card-bg: #075985;
+  --border-color: #0369a1;
+}
+
+[data-theme='forest'] {
+  --bg-primary: #064e3b;
+  --text-primary: #ecfdf5;
+  --accent-primary: #34d399;
+  --card-bg: #065f46;
+  --border-color: #047857;
+}
+
+[data-theme='sunset'] {
+  --bg-primary: #450a0a;
+  --text-primary: #fef2f2;
+  --accent-primary: #f87171;
+  --card-bg: #7f1d1d;
+  --border-color: #991b1b;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans);
+}
+
+/* Premium Heading Font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card Hover */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Premium Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+[data-theme='dark'] .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+[data-theme='dark'] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
